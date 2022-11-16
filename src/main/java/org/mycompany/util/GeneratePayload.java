@@ -40,6 +40,7 @@ public class GeneratePayload {
 		
 		exchange.getIn().setBody(payload);
 		log.info("generated new payload");
+		System.out.println("test");
 	}
 
 }

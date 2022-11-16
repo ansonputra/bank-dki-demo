@@ -3,7 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
     <bean class="org.mycompany.util.KillRoute" id="killRoute" scope="singleton"/>
     <bean class="org.mycompany.util.GenerateSignature" id="genSign" scope="singleton"/>
-    <bean class="org.mycompany.util.ValidationMessage" id="valMessage" scope="singleton"/>
+    <bean class="org.mycompany.util.GenerateID" id="genID" scope="singleton"/>
+    <bean class="org.mycompany.util.ValidateResponse" id="valResponse" scope="singleton"/>
     <bean class="org.mycompany.util.FilterResponse" id="filterResp"/>
     <bean class="org.mycompany.util.GeneratePayload" id="generatePayload"/>
     <bean class="org.apache.commons.dbcp.BasicDataSource"
@@ -247,13 +248,20 @@
                 <bean id="_bean1" method="process('input')" ref="genSign"/>
             </throttle>
         </route>
-        <route id="_val_message">
-            <from id="_from32" uri="direct:val_message"/>
+        <route id="_gen_ID">
+            <from id="_from32" uri="direct:genID"/>
             <process id="_init_strategy_val_message" ref="killRoute"/>
             <throttle id="_throttle2" timePeriodMillis="100">
                 <constant>1</constant>
-                <bean id="_bean2" method="process('input')" ref="valMessage"/>
+                <bean id="_bean2" method="process('input')" ref="genID"/>
             </throttle>
+        </route>
+        <route id="_valResponse">
+            <from id="_from33" uri="direct:valResponse"/>
+            <process id="_init_strategy_valResponse" ref="killRoute"/>
+            <convertBodyTo id="_convertBodyTo3" type="java.lang.String"/>
+            <process id="_init_strategy_valResponse" ref="valResponse"/>
+            <log id="_log3" message="body valResponse  : ${exchangeProperty.isSuccess}"/>
         </route>
         <route id="_gen_log">
             <from id="_from2" uri="direct:gen_log"/>

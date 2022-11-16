@@ -65,7 +65,7 @@ public class GenerateSignature {
 		return secret;
 	}
 
-	public void process(String input, Exchange exchange) throws Exception {
+	public void process(String privateKey, Exchange exchange) throws Exception {
 		try {
 			String secret = this.getSecret(exchange.getProperty("appId").toString());
 

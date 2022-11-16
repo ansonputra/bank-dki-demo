@@ -1,8 +1,10 @@
 package org.mycompany.dto;
 
 import java.io.Serializable;
+
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mycompany.pojo.AdditionalInfo;
 
@@ -13,17 +15,19 @@ public class RegLimitDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
+	@Length(min = 3, max = 64)
 	private String partnerReferenceNo;
-	@NotEmpty
+	@Length(min = 3, max = 32)
 	private String bankAccountNo;
-	@NotEmpty
+	@Length(min = 3, max = 19)
 	private String bankCardNo;
-	@NotNull
+	@Length(min = 3, max = 17)
 	private String limit;
 	@NotEmpty
+	@Length(min = 3, max = 128)
 	private String bankCardToken;
 	@NotEmpty
+	@Length(min = 8, max = 8)
 	private String otp;	
 	@Valid
 	private AdditionalInfo additionalInfo;

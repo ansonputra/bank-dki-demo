@@ -12,7 +12,6 @@ import java.util.Map;
 
 import org.apache.camel.Exchange;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.mycompany.pojo.Payload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,7 +107,7 @@ public class GenerateSignature {
 				exchange.setProperty("signature", signature);
 			
 			// Generate Final Payload
-			exchange.getIn().getBody(Payload.class).setSignature(signature);
+			//exchange.getIn().getBody(Payload.class).setSignature(signature);
 
 		} catch (Exception e) {
 			e.printStackTrace();

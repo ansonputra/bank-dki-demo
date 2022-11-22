@@ -23,7 +23,11 @@
 		<dataFormats>
 			<json allowJmsType="false" allowUnmarshallType="false" contentTypeHeader="false" enableJaxbAnnotationModule="false" id="jackson" library="Jackson" prettyPrint="false" useDefaultObjectMapper="true" useList="false" />
 		</dataFormats>
-		<restConfiguration bindingMode="off" component="jetty" contextPath="/" host="0.0.0.0" port="9090" />
+		<restConfiguration bindingMode="auto" component="jetty" host="0.0.0.0" port="8243" enableCORS="true">
+			<corsHeaders key="Access-Control-Allow-Origin" value="*" />
+			<corsHeaders key="Access-Control-Allow-Headers" value="Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers" />
+			<corsHeaders key="Access-Control-Allow-Methods" value="GET,PUT,POST,HEAD,OPTIONS" />
+		</restConfiguration>
 		<rest id="rest-82871616-cbc5-4dd8-8554-1d8c03e8246f">
 			<post bindingMode="json" consumes="application/json" id="217f8b49-ef16-4601-bc1e-afcbfa923e85" produces="application/json" type="org.mycompany.dto.TransactionHistoryListDTO" uri="/transaction-history-list">
 				<route>

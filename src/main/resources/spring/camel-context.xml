@@ -30,7 +30,7 @@
                 useDefaultObjectMapper="true" useList="false"/>
         </dataFormats>
         <restConfiguration bindingMode="auto" component="jetty"
-            enableCORS="true" host="0.0.0.0" port="9090">
+            enableCORS="true" host="0.0.0.0" port="9090" contextPath="/bankdki">
             <corsHeaders key="Access-Control-Allow-Origin" value="*"/>
             <corsHeaders key="Access-Control-Allow-Headers" value="Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"/>
             <corsHeaders key="Access-Control-Allow-Methods" value="GET,PUT,POST,HEAD,OPTIONS"/>

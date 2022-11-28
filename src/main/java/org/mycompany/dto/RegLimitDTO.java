@@ -26,7 +26,6 @@ public class RegLimitDTO implements Serializable {
 	@NotEmpty
 	@Length(min = 3, max = 128)
 	private String bankCardToken;
-	@NotEmpty
 	@Length(min = 8, max = 8)
 	private String otp;	
 	@Valid

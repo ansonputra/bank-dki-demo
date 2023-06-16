@@ -1,0 +1,49 @@
+name: i3gis-scan
+
+on:
+ push:
+   branches:
+     - main
+     
+jobs:
+  i3gis-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scan project with i3gis
+        run: |
+          echo "Scanning project bank-dki-demo with i3gis..."
+          scanResponse=$(curl --write-out '%{http_code}' --request POST -sL --url 'http://10.8.60.34:8083/scan' --header 'Content-Type: application/json' --header 'Authorization: Bearer qPCuE4sVHCQ8wklb4wIRig++DMkCUFwuGC51Q/aUnGRLz7CFRh5ygHudKYkUlBu7fU8Z9GQ7DEO8hln5lJRf+ONQUa2ICIR0+D806nEPNKK+uPzF/s1gwaWZPHdbzEer' --data '{"project_id":108}')
+          scanCode=$(echo $scanResponse | grep -o ...$)
+          echo "HTTP response status code: $scanCode"
+          if [ $scanCode = "200" ]; then
+            echo "Scan project bank-dki-demo with i3gis..."
+          else
+            echo "Response: $scanResponse"
+            echo "Build failed because scan was not successful..."
+            exit 1
+          fi
+          echo "Scan project bank-dki-demo with i3gis is starting..."
+
+  i3gis-status-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get scan status
+        run: |
+          echo "Get scan status..."
+          status_running=true
+          while [ "$status_running" = true ]; do
+            sleep 5
+            echo "Scan still running..."
+            checkResponse=$(curl --write-out ''%{http_code}'' --request GET -sL --url 'http://10.8.60.34:8083/scan/108' --header 'Content-Type: application/json' --header 'Authorization: Bearer qPCuE4sVHCQ8wklb4wIRig++DMkCUFwuGC51Q/aUnGRLz7CFRh5ygHudKYkUlBu7fU8Z9GQ7DEO8hln5lJRf+ONQUa2ICIR0+D806nEPNKK+uPzF/s1gwaWZPHdbzEer')
+            checkCode=$(echo $checkResponse | grep -o ...$)
+            echo "HTTP response status code: $checkCode"
+            if [ $checkCode != "200" ] && [ $checkCode != "404" ]; then
+              echo "Response: $checkResponse"
+              echo "Scan failed..."
+              exit 1
+            fi
+            if [ $checkCode = "404" ]; then
+              echo "Scan finished..."
+              status_running=false
+            fi
+          done     
